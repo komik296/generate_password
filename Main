@@ -1,0 +1,73 @@
+import random
+
+digits = '0123456789'
+lowercase_letters = 'abcdefghijklmnopqrstuvwxyz'
+uppercase_letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+punctuation = '!#$%&*+-=?@^_'
+
+chars = ''
+
+vol_pass = input('Сколько паролей надо сгенерировать : ')
+len_pass = input('Длина пароля : ')
+num_on = input('Включать ли цифры 0123456789? (y/n) ')
+up_str = input('Включать ли прописные буквы ABCDEFGHIJKLMNOPQRSTUVWXYZ? (y/n) ')
+low_str = input('Включать ли строчные буквы abcdefghijklmnopqrstuvwxyz? (y/n) ')
+sum_on = input('Включать ли символы !#$%&*+-=?@^_? (y/n) ')
+rest = input('Исключать ли неоднозначные символы il1Lo0O? (y/n) ')
+
+if num_on.lower() == 'y':
+    chars += digits
+if up_str.lower() == 'y':
+    chars += uppercase_letters
+if low_str.lower() == 'y':
+    chars += lowercase_letters
+if sum_on.lower() == 'y':
+    chars += punctuation
+
+
+def generate_password(lenght, chars):
+
+    while True:
+        password = ''
+        for i in range(int(lenght)):
+            password += random.choice(chars)
+
+        if digits in chars:
+            count = 0
+            for m in password:
+                if m in chars:
+                    count += 1
+            if count == 0:
+                continue
+        if lowercase_letters in chars:
+            count = 0
+            for m in password:
+                if m in chars:
+                    count += 1
+            if count == 0:
+                continue
+        if uppercase_letters in chars:
+            count = 0
+            for m in password:
+                if m in chars:
+                    count += 1
+            if count == 0:
+                continue
+        if punctuation in chars:
+            count = 0
+            for m in password:
+                if m in chars:
+                    count += 1
+            if count == 0:
+                continue
+
+        if rest.lower() == 'y':
+            for i in range(int(len_pass) - 1):
+                if password[i] + password[i + 1] in ['i1' ,'I1', '1i', '0o', 'O0', 'o0', 'l1', '1l',]:
+                    continue
+
+        return password
+
+
+for _ in range(int(vol_pass)):
+    print(generate_password(len_pass, chars))
